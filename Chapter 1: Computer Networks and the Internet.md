@@ -1,7 +1,15 @@
 # Chapter 1: Computer Networks and the Internet
 
 ## 1.1 A Nuts-and-Bolts Description (Infrastructure based Internet)
-
+#### 1.1.1 Các mạng con
+- Mobile Network (Mạng di động): Đây là mạng mà điện thoại thông minh và các thiết bị di động khác sử dụng để truy cập Internet. Ví dụ, khi bạn sử dụng 4G hoặc 5G để lướt web trên điện thoại.
+- Home Network (Mạng gia đình): Mạng trong nhà của bạn, nơi các thiết bị như máy tính, điện thoại và tivi thông minh kết nối thông qua WiFi hoặc cáp mạng.
+- Enterprise Network (Mạng doanh nghiệp): Mạng nội bộ của các công ty, giúp nhân viên truy cập dữ liệu và ứng dụng một cách an toàn trong môi trường làm việc.
+Local/Regional ISP (Nhà cung cấp dịch vụ Internet địa phương/khu vực): Các công ty cung cấp kết nối Internet cho bạn. Ví dụ, VNPT, Viettel là các nhà cung cấp dịch vụ Internet tại Việt Nam.
+- National/Global ISP (Nhà cung cấp dịch vụ Internet quốc gia/toàn cầu): Các công ty lớn hơn kết nối các ISP nhỏ với nhau trên phạm vi toàn quốc hoặc toàn cầu, như AT&T hay Verizon.
+- Data Center Network (Mạng trung tâm dữ liệu): Các máy chủ lưu trữ dữ liệu cho các ứng dụng và website lớn như Google, Facebook. Khi bạn truy cập trang web, dữ liệu sẽ được lấy từ các trung tâm này.
+- Content Provider Network (Mạng nhà cung cấp nội dung): Các công ty cung cấp nội dung trực tiếp đến người dùng như Netflix, YouTube, để phát trực tuyến video và các nội dung khác.
+#### 1.1.2
 - The Internet connects billions of computing devices worldwide, including traditional computers, smartphones, and various nontraditional devices.
 - The term "**hosts**" or "**end systems**" refers to all connected devices. Each End systems are interconnected by a network of communication links and packet switches.
 - Packet switches, such as routers and link layer switches, forward packets to their destinations.
