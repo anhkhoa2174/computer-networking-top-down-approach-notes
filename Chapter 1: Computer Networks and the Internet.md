@@ -177,6 +177,11 @@ Internet standards, developed by the ```Internet Engineering Task Force (IETF)``
 - **Peering:** ISPs can peer, enabling direct traffic exchange without payment. Tier 1 ISPs also peer.
 - **IXPs:** Internet Exchange Points facilitate ISPs' direct connections, enhancing efficiency.
 - **Content Provider Networks:** Large providers like Google create their networks for control and cost reduction.
+- **Global Transit ISPs** : Đây là những nhà cung cấp Internet lớn có quy mô toàn cầu, kết nối các Regional ISPs với nhau.
+- **Regional ISPs**: Cung cấp dịch vụ Internet trong 1 khu vực địa lý nhất định.
+- **Tier 1 ISPs**: Đây là những ISP nằm ở vị trí cao nhất trong hệ thống Internet. Họ có thể kết nối với mọi ISP khác mà không phải trả chi phí cho việc kết nối. Họ có mạng lưới rộng lớn và có khả năng trao đổi lưu lượng truy cập với nhau miễn phí, đảm bảo kết nối toàn cầu.
+- **Peering**: Đây là sự sắp xếp giữa hai ISP để kết nối và trao đổi lưu lượng truy cập trực tiếp mà không phải trả phí cho nhau. Điều này giúp giảm chi phí và cải thiện hiệu quả mạng bằng cách tránh cần đến một nhà cung cấp trung gian.
+- **Peering giữa Tier 1**: Các ISP Tier 1 thường xuyên thiết lập kết nối peer với nhau. Vì họ không phải trả tiền cho việc kết nối, họ có thể tự do trao đổi lưu lượng truy cập, giúp duy trì kết nối tốc độ cao.
 
 <img src="https://lh3.googleusercontent.com/pw/ADCreHfe3VrXVOkt6FxFDHy4qRsByO6EugEHMcLkEvVuXtz2Bz3iZW28h32W2rJs7faFriHzgxJIfbOPV2Gd5L1_0e9PqKnc_pCtjmqNN0OxeH15auTYBd17kowR13spgnTFSgBjINghCV3Ew7gDsBC8lIh5=w1920-h926-s-no" width="600" height="300">
 
