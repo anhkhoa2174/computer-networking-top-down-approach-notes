@@ -84,6 +84,21 @@ Content-Type: text/html \r\n
 - **HTTP Methods**: HTTP includes methods like GET, POST, PUT, and DELETE for different types of requests and actions.
 - **Entity Body**: The entity body in HTTP messages contains data related to the request method.
 
+Ý NGHĨA CỦA CÁC METHOD:
+1. POST method
+Chức năng: Dùng để gửi dữ liệu từ client (người dùng) đến server.
+Ví dụ: Khi bạn điền vào một mẫu (form) trên trang web, thông tin bạn nhập sẽ được gửi đi trong phần thân của yêu cầu HTTP POST.
+2. GET method
+Chức năng: Dùng để gửi dữ liệu đến server qua URL.
+Cách hoạt động: Dữ liệu được thêm vào sau dấu "?" trong URL.
+Ví dụ: Khi bạn truy cập www.somesite.com/animalsearch?monkeys&banana, dữ liệu "monkeys" và "banana" sẽ được gửi đến server để tìm kiếm.
+3. HEAD method
+Chức năng: Giống như phương thức GET, nhưng chỉ yêu cầu tiêu đề (headers) của phản hồi mà không tải nội dung thực tế.
+Ví dụ: Bạn muốn biết thông tin về một tài nguyên (như kích thước tệp), nhưng không cần nội dung bên trong của nó.
+4. PUT method
+Chức năng: Dùng để tải lên một tệp mới lên server.
+Chú ý: Phương thức này sẽ thay thế hoàn toàn tệp đã tồn tại tại URL đó bằng nội dung bạn gửi trong phần thân của yêu cầu PUT.
+
 ### 2.3.3 Cookies
 
 - There are situations where web sites need to identify users, for security or personalization purposes. HTTP uses cookies to achieve user identification and tracking.
