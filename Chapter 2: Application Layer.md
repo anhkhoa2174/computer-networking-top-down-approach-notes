@@ -86,19 +86,25 @@ Content-Type: text/html \r\n
 
 Ý NGHĨA CỦA CÁC METHOD:
 1. POST method
-Chức năng: Dùng để gửi dữ liệu từ client (người dùng) đến server.
-Ví dụ: Khi bạn điền vào một mẫu (form) trên trang web, thông tin bạn nhập sẽ được gửi đi trong phần thân của yêu cầu HTTP POST.
+- Chức năng: Dùng để gửi dữ liệu từ client (người dùng) đến server.
+- Ví dụ: Khi bạn điền vào một mẫu (form) trên trang web, thông tin bạn nhập sẽ được gửi đi trong phần thân của yêu cầu HTTP POST.
 2. GET method
-Chức năng: Dùng để gửi dữ liệu đến server qua URL.
-Cách hoạt động: Dữ liệu được thêm vào sau dấu "?" trong URL.
+- Chức năng: Dùng để gửi dữ liệu đến server qua URL.
+- Cách hoạt động: Dữ liệu được thêm vào sau dấu "?" trong URL.
 Ví dụ: Khi bạn truy cập www.somesite.com/animalsearch?monkeys&banana, dữ liệu "monkeys" và "banana" sẽ được gửi đến server để tìm kiếm.
 3. HEAD method
-Chức năng: Giống như phương thức GET, nhưng chỉ yêu cầu tiêu đề (headers) của phản hồi mà không tải nội dung thực tế.
-Ví dụ: Bạn muốn biết thông tin về một tài nguyên (như kích thước tệp), nhưng không cần nội dung bên trong của nó.
+- Chức năng: Giống như phương thức GET, nhưng chỉ yêu cầu tiêu đề (headers) của phản hồi mà không tải nội dung thực tế.
+- Ví dụ: Bạn muốn biết thông tin về một tài nguyên (như kích thước tệp), nhưng không cần nội dung bên trong của nó.
 4. PUT method
-Chức năng: Dùng để tải lên một tệp mới lên server.
-Chú ý: Phương thức này sẽ thay thế hoàn toàn tệp đã tồn tại tại URL đó bằng nội dung bạn gửi trong phần thân của yêu cầu PUT.
+-Chức năng: Dùng để tải lên một tệp mới lên server.
+- Chú ý: Phương thức này sẽ thay thế hoàn toàn tệp đã tồn tại tại URL đó bằng nội dung bạn gửi trong phần thân của yêu cầu PUT.
 
+> HTTP response status codes:
+> 200: OK
+> 301: Moved Permanently
+> 400: Bad request
+> 404: Not Found
+> 505: HTTP Version Not Supported
 ### 2.3.3 Cookies
 
 - There are situations where web sites need to identify users, for security or personalization purposes. HTTP uses cookies to achieve user identification and tracking.
@@ -254,10 +260,10 @@ Subject: Searching for the meaning of life.
 - A resource record (RR) is a four tuple: `(Name, Value, Type, TTL)`.
 - **TTL** (Time to Live) determines when a resource should be removed from a cache.
 - Types of resource records:
-    - `Type=A`: Maps hostname to IP address.
-    - `Type=NS`: Maps a domain to the hostname of an authoritative DNS server.
-    - `Type=CNAME`: Provides the canonical name for an alias hostname.
-    - `Type=MX`: Maps to the canonical name of a mail server with an alias hostname.
+    - `Type=A`: Maps hostname to IP address. Cho biết máy chủ nào sẽ cung cấp thông tin cho tên miền đó.
+    - `Type=NS`: Maps a domain to the hostname of an authoritative DNS server. Chuyển đổi tên miền thành địa chỉ IP, cho phép máy tính tìm thấy nhau.
+    - `Type=CNAME`: Provides the canonical name for an alias hostname. Cho phép sử dụng nhiều tên miền cho cùng một địa chỉ IP. Ví dụ, bạn có thể có nhiều tên miền dễ nhớ hơn trỏ đến cùng một máy chủ.
+    - `Type=MX`: Maps to the canonical name of a mail server with an alias hostname. Xác định máy chủ nào sẽ nhật email cho tên miền đó. Các bản ghi MX cho phép hệ thống phân phối mail đến đúng máy chủ.
 
 > To obtain the canonical name for the mail server, a DNS client would query for an MX record; to obtain the canonical name for the other server, the DNS client would query for the CNAME record.
 
