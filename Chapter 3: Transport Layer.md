@@ -2,7 +2,17 @@
 
 
 > transport layer -- extending the network layer’s delivery service between two end systems to a delivery service between two application layer processes running on the end systems.
+> Lớp Network: 
 
+Cung cấp giao tiếp logic giữa các hosts (máy chủ hoặc thiết bị mạng).
+Đảm bảo dữ liệu được chuyển từ nguồn đến đích qua nhiều mạng khác nhau.
+Thực hiện định tuyến dữ liệu, tức là quyết định con đường nào mà dữ liệu sẽ đi qua trong mạng.
+
+> Lớp Transport:
+
+Cung cấp giao tiếp logic giữa các processes (ứng dụng hoặc dịch vụ) trên cùng một host hoặc giữa các host khác nhau.
+Quản lý cách thức mà dữ liệu được chia nhỏ và ghép lại, đảm bảo rằng các phần dữ liệu đến đúng ứng dụng.
+Cung cấp các dịch vụ như kiểm soát lỗi, kiểm soát lưu lượng và bảo mật.
 
 ## 3.1 Transport-Layer Services
 
@@ -40,7 +50,7 @@
 - Each socket has a unique identifier. Fields in a transport layer segment are used to identify these receiving socket.
 - Demultiplexing directs the segment to the corresponding socket, ensuring data is delivered to the correct process.
 - In the household analogy, this is similar to handing out mail to the right person based on the address.
-
+- Khi dữ liệu đến người nhận, lớp giao vận sẽ sử dụng thông tin tiêu đề để tách các tin nhắn khác nhau ra. Đây là lúc mà mỗi tin nhắn sẽ được chuyển đến ứng dụng tương ứng (giống như hành khách xuống xe buýt tại trạm của họ).
 ### Multiplexing
 
 - Multiplexing involves gathering data from different sockets, encapsulating it with header information to create segments, and passing the segments to the network layer.
@@ -48,7 +58,7 @@
 - Sockets have unique identifiers. Special fields in segments identify the socket for delivery.
 - These fields include `source port number` and `destination port number`.
 - Port numbers are 16 bit numbers, ranging from 0 to 65535. The well known port numbers (0 to 1023) are reserved for established application protocols.
-
+- Khi bạn gửi tin nhắn, lớp giao vận (Transport) sẽ ghép nhiều tin nhắn từ nhiều ứng dụng khác nhau thành một luồng dữ liệu và thêm thông tin tiêu đề cho từng tin nhắn. Điều này giống như việc một chiếc xe buýt chở nhiều hành khách đến nhiều điểm khác nhau.
 
 ## 3.3 Connectionless Multiplexing and Demultiplexing
 
@@ -66,7 +76,13 @@ clientSocket.bind((’’, 19157))
 - Segments are directed to the corresponding socket based on the destination port number.
 - If different segments have the same destination IP and destination port numbers, they go to the same destination process.
 - The source port number in a UDP segment serves as part of the **"return address"**. It allows the recipient to send a response back to the sender.
-
+- Giao thức: Sử dụng giao thức UDP.
+- Thiết lập Kết nối: Không cần thiết lập kết nối trước khi gửi dữ liệu. Dữ liệu có thể được gửi ngay lập tức.
+- Demultiplexing: Dữ liệu từ nhiều nguồn (các địa chỉ IP khác nhau, các số cổng khác nhau) có thể được gửi đến cùng một socket (số cổng đích).
+- Đặc điểm:
+Không đảm bảo độ tin cậy: Nếu gói dữ liệu bị mất, sẽ không có thông báo hay khôi phục tự động.
+Không đảm bảo thứ tự: Các gói có thể đến theo thứ tự khác với thứ tự gửi.
+Thích hợp cho các ứng dụng cần tốc độ cao và không yêu cầu độ tin cậy, như video streaming hoặc trò chơi trực tuyến.
 
 > A-to-B segment the source port number serves as part of a “return address”—when B wants to send a segment back to A, the destination port in the B-to-A segment will take its value from the source port value of the A-to-B segment. 
 
@@ -77,8 +93,13 @@ clientSocket.bind((’’, 19157))
 - A connection establishment request includes destination and source port numbers.
 - Host operating systems use these values to locate the server process waiting for connections.
 - Server and client sockets are established and identified with four tuple values.
-- All subsequent segments are demultiplexed based on these four values to the correct socket.
-
+- All subsequent seýgments are demultiplexed based on these four values to the correct socket.
+- Thiết lập Kết nối: Cần thiết lập một kết nối giữa máy gửi và máy nhận trước khi bắt đầu truyền dữ liệu (quá trình bắt tay ba bước).
+- Demultiplexing: Mỗi kết nối có thể được xác định bằng một bộ ba giá trị: địa chỉ IP nguồn, số cổng nguồn, và địa chỉ IP đích, số cổng đích. Điều này cho phép nhiều kết nối song song giữa cùng một cặp máy.
+- Đặc điểm:
+Đảm bảo độ tin cậy: Nếu gói dữ liệu bị mất, TCP sẽ tự động gửi lại.
+Đảm bảo thứ tự: Các gói dữ liệu sẽ được nhận theo đúng thứ tự đã gửi.
+Thích hợp cho các ứng dụng cần độ tin cậy, như truyền file, duyệt web, hoặc email.
 <img src="https://lh3.googleusercontent.com/pw/ADCreHcmMPDSQ4fOctkpXLDYANE30KxCaIIeiv4cNkwy7qP5yrIkfrHwx0vMaMeRo7aSooqns-GiXxoULVwt7bLenIiyAi49A2ZMf4zAg82q2jzIWVFuD6Sx19TF--PFa21b_2xfQVsyIR7oNZDQWG4Vv5S_=w1920-h1060-s-no" width="580" height="350">
 
 - Web servers may have multiple processes or threads to handle connections.
@@ -86,6 +107,9 @@ clientSocket.bind((’’, 19157))
 - High performing servers typically use one process and multiple threads or lightweight subprocesses.
 - One process can have many connection sockets, each with different identifiers.
 
+
+> TCP sử dụng 4-tuple: (IP nguồn, cổng nguồn, IP đích, cổng đích) để phân biệt từng kết nối, vì TCP có cơ chế quản lý kết nối phức tạp.
+> > UDP chỉ cần 2-tuple: (IP đích, cổng đích), vì nó không cần thiết lập kết nối trước khi truyền dữ liệu và không theo dõi trạng thái kết nối. Các gói UDP độc lập, không có trình tự cụ thể như TCP.
 ### Persistent vs. Non Persistent HTTP
 
 - Persistent HTTP exchanges messages over the same server socket during a connection.
