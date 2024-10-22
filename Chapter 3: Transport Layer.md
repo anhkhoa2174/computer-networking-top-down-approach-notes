@@ -1,5 +1,12 @@
 # Chapter 3: Transport Layer
 
+Trước tiên ta phải phân biệt được sự khác nhau giữa datagram và segment:
+- Datagram: Là thuật ngữ dùng cho các gói dữ liệu trong các giao thức không kết nối như UDP. Datagram là các gói dữ liệu được truyền đi mà không cần phải thiết lập hay quản lý trạng thái kết nối giữa người gửi và người nhận.
+
+- Segment: Là thuật ngữ dùng cho các gói dữ liệu trong các giao thức như TCP. Segment thường được truyền đi sau khi đã thiết lập kết nối và có cơ chế để quản lý việc gửi lại nếu gói bị mất hoặc sắp xếp lại nếu chúng bị nhận sai thứ tự.
+
+
+
 
 > transport layer -- extending the network layer’s delivery service between two end systems to a delivery service between two application layer processes running on the end systems.
 > Lớp Network: 
@@ -119,6 +126,38 @@ Thích hợp cho các ứng dụng cần độ tin cậy, như truyền file, du
 ## 3.5 UDP (User Datagram Protocol)
 
 - UDP is a minimalistic transport protocol. It provides `multiplexing`/`demultiplexing` and minimal `error checking`. Unlike TCP, it adds very little to IP.
+
+UDP (User Datagram Protocol) thường được sử dụng trong các ứng dụng cần sự tốc độ, đơn giản, và có khả năng chịu mất mát dữ liệu nhất định. Một số trường hợp phổ biến mà UDP được dùng bao gồm:
+
+1. Streaming các ứng dụng đa phương tiện (multimedia streaming):
+UDP thường được dùng trong các ứng dụng streaming video hoặc audio trực tuyến như YouTube, Netflix, Zoom, hay các dịch vụ hội nghị truyền hình.
+Chịu mất mát dữ liệu (loss tolerant): Các ứng dụng này có thể chấp nhận một số gói tin bị mất mà không cần gửi lại, miễn sao video hoặc audio vẫn chạy mượt mà.
+Nhạy cảm với tốc độ (rate sensitive): Tốc độ và tính liên tục quan trọng hơn là việc nhận tất cả dữ liệu đầy đủ. UDP giúp giảm thiểu độ trễ (latency) so với các giao thức khác như TCP.
+2. DNS (Domain Name System):
+DNS sử dụng UDP để truyền các truy vấn vì tốc độ nhanh và không cần duy trì kết nối liên tục giữa máy chủ DNS và máy khách. Các gói truy vấn thường nhỏ và không cần phải kiểm soát tình trạng mất gói.
+3. SNMP (Simple Network Management Protocol):
+UDP được sử dụng trong SNMP để quản lý và giám sát các thiết bị mạng. SNMP cần gửi và nhận các gói nhỏ mà không cần duy trì kết nối phức tạp.
+4. HTTP/3:
+HTTP/3, một phiên bản mới của giao thức web, sử dụng UDP thay vì TCP để cải thiện tốc độ kết nối và hiệu suất trong các trường hợp cần độ trễ thấp.
+Mặc dù UDP không có tính năng đảm bảo đáng tin cậy như TCP, nhưng với HTTP/3, lớp ứng dụng sẽ đảm nhận việc đảm bảo sự tin cậy và điều khiển tắc nghẽn, giúp UDP trở thành lựa chọn lý tưởng cho những cải tiến tốc độ và hiệu quả.
+5. Nếu cần chuyển dữ liệu đáng tin cậy qua UDP (như HTTP/3):
+Khi các ứng dụng sử dụng UDP nhưng vẫn cần độ tin cậy (reliable transfer), họ sẽ thêm các cơ chế đảm bảo ở tầng ứng dụng, chẳng hạn như:
+Xử lý mất mát dữ liệu: Nếu có gói bị mất, ứng dụng có thể yêu cầu gửi lại gói đó.
+Kiểm soát tắc nghẽn: Ứng dụng có thể tự quản lý và điều chỉnh tốc độ truyền để tránh gây tắc nghẽn cho mạng.
+
+
+UDP segment header:
+1. Source port # (Số cổng nguồn):
+Đây là số cổng của ứng dụng phía gửi. Nó giúp xác định ứng dụng nào trên máy gửi đã tạo ra gói tin. Ví dụ, nếu một trình duyệt web đang gửi yêu cầu, cổng nguồn là nơi gói tin xuất phát từ máy tính đó.
+2. Destination port # (Số cổng đích):
+Đây là số cổng của ứng dụng phía nhận. Khi gói tin đến máy đích, số cổng này sẽ giúp định tuyến gói tin tới đúng ứng dụng trên máy nhận. Ví dụ, một máy chủ web có thể sử dụng cổng 80 cho HTTP.
+3. Length (Độ dài):
+Trường này ghi lại độ dài của toàn bộ gói UDP, bao gồm cả phần tiêu đề và dữ liệu (payload). Đây là độ dài tính bằng byte, giúp xác định kích thước của gói tin để biết nơi nào dữ liệu bắt đầu và kết thúc.
+4. Checksum:
+Đây là một mã kiểm tra lỗi được tạo ra từ nội dung của gói UDP. Mục đích là để kiểm tra xem gói tin có bị lỗi trong quá trình truyền đi hay không. Khi gói tin đến đích, checksum sẽ được kiểm tra để xem gói tin có đúng như lúc nó được gửi hay không.
+5. Application data (Payload):
+Đây là dữ liệu thực sự mà tầng ứng dụng muốn gửi. Ví dụ, trong một yêu cầu DNS, đây sẽ là thông tin về tên miền mà máy muốn tra cứu. Trong các ứng dụng khác như truyền tải video, đây có thể là một phần của video được gửi đi.
+
 
 > If the application developer chooses UDP instead of TCP, then the application is almost directly talking with IP layer. UDP takes messages from the application process, attaches source and destination port number fields for the multiplexing/demultiplexing service, adds two other small fields, and passes the resulting segment to the network layer. 
 
